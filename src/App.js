@@ -1,25 +1,24 @@
-import logo from './logo.svg';
+import { Fragment } from 'react';
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
+import HomePage from './Components/HomePage/HomePage';
+import LoginPage from './Components/LoginPage/LoginPage';
 
-function App() {
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <Switch>
+        {props.token !== null && <Route path="/home" component={HomePage}/>}
+        <Route path="/" component={LoginPage}/>
+      </Switch>
+    </Fragment>
   );
 }
 
-export default App;
+const mapStateToProps =(state) => {
+  return {
+    token : state.token
+  }
+}
+export default connect(mapStateToProps,null)(App);
